@@ -1,3 +1,4 @@
+import os
 import mysql.connector as s
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -12,7 +13,11 @@ warnings.filterwarnings(action='ignore', category=UserWarning)
 # MySQL connection setup
 def connect_db():
     try:
-        connection = s.connect(host="localhost", user="root", passwd="rootroot", database="project")
+        connection = s.connect(
+            host=os.getenv("DB_HOST"),
+            user=os.getenv("DB_USER"),
+            passwd=os.getenv("DB_PASS"),
+            database=os.getenv("DB_NAME")
         if connection.is_connected():
             print("Connected to database")
             return connection
